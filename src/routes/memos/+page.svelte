@@ -35,7 +35,7 @@
     {:else}
         {#each data.memos as memo (memo.id)}
             <div 
-                class="bg-white rounded-lg shadow mb-4"
+                class="bg-white rounded-lg shadow-sm mb-4"
                 in:fly="{{ y: 50, duration: 300 }}"
             >
                 <div class="p-4">

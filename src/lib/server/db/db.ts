@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/better-sqlite3';
 import Database from 'better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { resolve } from 'path';
-import * as schema from '$lib/db/schema';
+import * as schema from '$lib/server/db/schema';
 
 // This path is relative to where the application runs
 const DB_PATH = resolve('./sqlite.db');

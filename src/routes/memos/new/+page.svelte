@@ -50,7 +50,7 @@
     <form 
         method="POST" 
         use:enhance={handleSubmit}
-        class="space-y-6 bg-white rounded-lg shadow-sm p-6"
+        class="space-y-6 bg-white rounded-lg shadow-xs p-6"
     >
         {#if form?.error}
             <div class="bg-red-50 border-l-4 border-red-400 p-4">
@@ -68,7 +68,7 @@
                 id="title"
                 name="title"
                 value={form?.data?.title || ''}
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500"
                 placeholder="Give your memo a title"
             >
         </div>
@@ -100,7 +100,7 @@
                     rows="8"
                     required
                     value={form?.data?.content || ''}
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Write your memo here..."
                 ></textarea>
             {/if}
@@ -157,7 +157,7 @@
                     id="visibility"
                     name="visibility"
                     value={form?.data?.visibility || 'private'}
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500"
                 >
                     <option value="private">Private</option>
                     <option value="public">Public</option>
@@ -171,7 +171,7 @@
                     name="pinned"
                     value="true"
                     checked={form?.data?.pinned || false}
-                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    class="h-4 w-4 rounded-sm border-gray-300 text-blue-600 focus:ring-blue-500"
                 >
                 <label for="pinned" class="ml-2 block text-sm text-gray-900">
                     Pin this memo
@@ -183,7 +183,7 @@
         <div class="flex justify-end">
             <button
                 type="submit"
-                class="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                class="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
                 Create Memo
             </button>

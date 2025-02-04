@@ -62,7 +62,7 @@
 
     <!-- New Tag Form -->
     {#if showNewTagForm}
-        <div class="mb-6 bg-white p-4 rounded-lg shadow" transition:slide>
+        <div class="mb-6 bg-white p-4 rounded-lg shadow-sm" transition:slide>
             <form
                 method="POST"
                 action="?/create"
@@ -78,7 +78,7 @@
                         id="name"
                         name="name"
                         required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500"
                     >
                 </div>
                 
@@ -127,7 +127,7 @@
     <div class="space-y-4">
         {#each tags as tag (tag.id)}
             <div
-                class="bg-white p-4 rounded-lg shadow flex items-center justify-between"
+                class="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between"
                 transition:slide
             >
                 {#if editingTag?.id === tag.id}
@@ -142,7 +142,7 @@
                             type="text"
                             name="name"
                             value={tag.name}
-                            class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="flex-1 rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500"
                         >
                         <div class="flex gap-2">
                             {#each DEFAULT_COLORS as color}
