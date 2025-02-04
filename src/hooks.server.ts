@@ -1,11 +1,9 @@
-import { db, closeDatabase } from '$lib/server/db';
+import { seedDatabase } from '$lib/server/db/seed';
 import type { Handle } from '@sveltejs/kit';
 
-// Close database when server shuts down
-process.on('SIGTERM', closeDatabase);
-process.on('SIGINT', closeDatabase);
+// Seed database on startup
+seedDatabase().catch(console.error);
 
 export const handle: Handle = async ({ event, resolve }) => {
-    // Database is automatically initialized when imported
-    return resolve(event);
+  return resolve(event);
 };

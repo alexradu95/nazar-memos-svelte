@@ -15,11 +15,12 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"db:generate": "drizzle-kit generate:sqlite",
+		"db:generate": "drizzle-kit generate",
 		"db:migrate": "tsx src/lib/db/migrate.ts",
-		"db:push": "drizzle-kit push:sqlite",
+		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio --verbose",
-		"db:pull": "drizzle-kit introspect:sqlite"
+		"db:pull": "drizzle-kit introspect",
+		"db:seed": "tsx src/lib/server/db/seed.ts"
 	  },
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
