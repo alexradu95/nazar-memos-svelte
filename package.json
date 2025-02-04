@@ -16,7 +16,7 @@
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "tsx src/lib/db/migrate.ts",
+		"db:migrate": "tsx src/lib/server/db/migrate.ts",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio --verbose",
 		"db:pull": "drizzle-kit introspect",
