@@ -1,5 +1,5 @@
 // src/lib/server/db/schema.ts
-import { sql } from 'drizzle-orm';
+import { sql, type InferSelectModel } from 'drizzle-orm';
 import { sqliteTable, text, integer, primaryKey } from 'drizzle-orm/sqlite-core';
 
 export const users = sqliteTable('users', {
@@ -9,6 +9,16 @@ export const users = sqliteTable('users', {
     passwordHash: text('password_hash').notNull(),
     settingsJson: text('settings_json'),
     createdAt: integer('created_at').notNull().default(sql`(strftime('%s', 'now'))`)
+});
+
+export const sessions = sqliteTable('sessions', {
+    id: text('id').primaryKey(),
+    userId: integer('user_id')
+        .notNull()
+        .references(() => users.id),
+    expiresAt: integer('expires_at', { 
+        mode: 'timestamp' 
+    }).notNull()
 });
 
 export const memos = sqliteTable('memos', {
@@ -39,3 +49,9 @@ export const memo_tags = sqliteTable('memo_tags', {
         pk: primaryKey({ columns: [table.memoId, table.tagId] })
     }
 });
+
+export type User = InferSelectModel<typeof users>;
+export type Session = InferSelectModel<typeof sessions>;
+export type Memo = InferSelectModel<typeof memos>;
+export type Tag = InferSelectModel<typeof tags>;
+export type MemoTag = InferSelectModel<typeof memo_tags>;
