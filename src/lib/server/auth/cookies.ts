@@ -1,7 +1,10 @@
 // src/lib/server/auth/cookies.ts
 import type { RequestEvent } from "@sveltejs/kit";
 
-export function setSessionCookie(event: RequestEvent, token: string, expiresAt: Date): void {
+export function setSessionCookie(event: RequestEvent, token: string, expiresAtTimestamp: number): void {
+    // Convert UNIX timestamp (seconds) to Date for cookie expiration
+    const expiresAt = new Date(expiresAtTimestamp * 1000);
+
     event.cookies.set("session", token, {
         httpOnly: true,
         path: "/",

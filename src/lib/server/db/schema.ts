@@ -16,9 +16,10 @@ export const sessions = sqliteTable('sessions', {
     userId: integer('user_id')
         .notNull()
         .references(() => users.id),
-    expiresAt: integer('expires_at', { 
-        mode: 'timestamp' 
-    }).notNull()
+    expiresAt: integer('expires_at').notNull(),
+    createdAt: integer('created_at').notNull().default(sql`(strftime('%s', 'now'))`),
+    userAgent: text('user_agent'),
+    lastUsed: integer('last_used').notNull().default(sql`(strftime('%s', 'now'))`)
 });
 
 export const memos = sqliteTable('memos', {

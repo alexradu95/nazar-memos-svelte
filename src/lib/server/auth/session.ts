@@ -5,9 +5,6 @@ import { eq, lte } from 'drizzle-orm';
 import type { User, Session } from '../db/schema';
 
 // Generate a random session token using Web Crypto API
-// The session token should be a random string. We recommend generating at least 20 random bytes from a secure source 
-// (DO NOT USE Math.random()) and encoding it with base32. You can use any encoding schemes, but base32 is case insensitive 
-// unlike base64 and only uses alphanumeric letters while being more compact than hex encoding.
 export function generateSessionToken(): string {
     const bytes = crypto.getRandomValues(new Uint8Array(32));
     return Array.from(bytes)
@@ -16,15 +13,17 @@ export function generateSessionToken(): string {
 }
 
 // Create a new session for a user
-export async function createSession(userId: number): Promise<Session> {
-    // Set expiration to 30 days from now
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 30);
+export async function createSession(userId: number, userAgent?: string): Promise<Session> {
+    const now = Math.floor(Date.now() / 1000);
+    const expiresAt = now + (30 * 24 * 60 * 60); // 30 days from now in seconds
 
     const session: Omit<Session, "id"> & { id: string } = {
         id: generateSessionToken(),
         userId,
-        expiresAt
+        expiresAt,
+        createdAt: now,
+        lastUsed: now,
+        userAgent: userAgent || null
     };
 
     const [newSession] = await db.insert(sessions)
@@ -55,7 +54,7 @@ export async function validateSession(sessionId: string): Promise<SessionValidat
     }
 
     const { user, session } = result[0];
-    const now = new Date();
+    const now = Math.floor(Date.now() / 1000);
 
     // Check if session has expired
     if (now >= session.expiresAt) {
@@ -64,21 +63,22 @@ export async function validateSession(sessionId: string): Promise<SessionValidat
     }
 
     // Extend session if it's close to expiring (within 15 days)
-    const fifteenDaysFromNow = new Date();
-    fifteenDaysFromNow.setDate(fifteenDaysFromNow.getDate() + 15);
+    const fifteenDaysFromNow = now + (15 * 24 * 60 * 60);
 
     if (session.expiresAt <= fifteenDaysFromNow) {
-        const newExpiresAt = new Date();
-        newExpiresAt.setDate(newExpiresAt.getDate() + 30);
+        const newExpiresAt = now + (30 * 24 * 60 * 60);
+        const newLastUsed = now;
 
         await db
             .update(sessions)
             .set({
-                expiresAt: newExpiresAt
+                expiresAt: newExpiresAt,
+                lastUsed: newLastUsed
             })
             .where(eq(sessions.id, session.id));
 
         session.expiresAt = newExpiresAt;
+        session.lastUsed = newLastUsed;
     }
 
     return { session, user };
@@ -91,7 +91,7 @@ export async function invalidateSession(sessionId: string): Promise<void> {
 
 // Clean up expired sessions
 export async function cleanupSessions(): Promise<void> {
-    const now = new Date();
+    const now = Math.floor(Date.now() / 1000);
     await db.delete(sessions)
         .where(lte(sessions.expiresAt, now));
 }
