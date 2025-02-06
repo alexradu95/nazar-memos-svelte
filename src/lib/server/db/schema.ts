@@ -33,12 +33,31 @@ export const memos = sqliteTable('memos', {
     updatedAt: integer('updated_at').notNull().default(sql`(strftime('%s', 'now'))`)
 });
 
+export const tagCategories = sqliteTable('tag_categories', {
+    id: integer('id').primaryKey(),
+    userId: integer('user_id')
+        .notNull()
+        .references(() => users.id),
+    name: text('name').notNull(),
+    icon: text('icon').notNull(),
+    description: text('description'),
+    createdAt: integer('created_at')
+        .notNull()
+        .default(sql`(strftime('%s', 'now'))`)
+});
+
 export const tags = sqliteTable('tags', {
     id: integer('id').primaryKey(),
-    userId: integer('user_id').notNull().references(() => users.id),
+    userId: integer('user_id')
+        .notNull()
+        .references(() => users.id),
+    categoryId: integer('category_id')
+        .references(() => tagCategories.id),
     name: text('name').notNull(),
     color: text('color'),
-    createdAt: integer('created_at').notNull().default(sql`(strftime('%s', 'now'))`),
+    createdAt: integer('created_at')
+        .notNull()
+        .default(sql`(strftime('%s', 'now'))`),
 });
 
 export const memo_tags = sqliteTable('memo_tags', {
@@ -56,3 +75,4 @@ export type Session = InferSelectModel<typeof sessions>;
 export type Memo = InferSelectModel<typeof memos>;
 export type Tag = InferSelectModel<typeof tags>;
 export type MemoTag = InferSelectModel<typeof memo_tags>;
+export type TagCategory = InferSelectModel<typeof tagCategories>;
