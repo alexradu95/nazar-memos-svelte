@@ -1,7 +1,7 @@
 <!-- src/routes/memos/+page.svelte -->
 <script lang="ts">
-    import { fly } from 'svelte/transition';
     import type { PageData } from './$types';
+    import MemoCard from '$lib/components/organisms/MemoCard.svelte';
 
     export let data: PageData;
 </script>
@@ -34,65 +34,7 @@
         </div>
     {:else}
         {#each data.memos as memo (memo.id)}
-            <div 
-                class="bg-white rounded-lg shadow-sm mb-4"
-                in:fly="{{ y: 50, duration: 300 }}"
-            >
-                <div class="p-4">
-                    <!-- Header -->
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h2 class="font-semibold text-lg">
-                                {memo.title || 'Untitled'}
-                            </h2>
-                            <div class="text-sm text-gray-500 flex items-center gap-2">
-                                <span>{new Date(memo.createdAt * 1000).toLocaleDateString()}</span>
-                                <span>•</span>
-                                <span class="capitalize">{memo.visibility}</span>
-                                {#if memo.pinned}
-                                    <span>•</span>
-                                    <span class="text-yellow-600">📌 Pinned</span>
-                                {/if}
-                            </div>
-                        </div>
-                        
-                        <button class="text-gray-400 hover:text-gray-600 p-1">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- Content -->
-                    <div class="prose max-w-none mb-3">
-                        {#if memo.content.length > 300}
-                            <p>{memo.content.slice(0, 300)}... 
-                                <button class="text-blue-600 hover:underline">See more</button>
-                            </p>
-                        {:else}
-                            <p>{memo.content}</p>
-                        {/if}
-                    </div>
-
-                    <!-- Tags -->
-                    {#if memo.tags?.length}
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            {#each memo.tags as tag}
-                                <span 
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                                    style="
-                                        background-color: {tag.color}30;
-                                        color: {tag.color};
-                                        border: 1px solid {tag.color};
-                                    "
-                                >
-                                    {tag.name}
-                                </span>
-                            {/each}
-                        </div>
-                    {/if}
-                </div>
-            </div>
+            <MemoCard {memo} />
         {/each}
     {/if}
 </div>
