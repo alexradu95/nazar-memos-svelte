@@ -26,20 +26,12 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-2xl font-bold">Manage Tags</h1>
-        <div class="flex gap-2">
-            <a
-                href="/tags/categories"
-                class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
-            >
-                Manage Categories
-            </a>
-            <button
-                on:click={() => showNewTagForm = true}
-                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-                New Tag
-            </button>
-        </div>
+        <button
+            on:click={() => showNewTagForm = true}
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+            New Tag
+        </button>
     </div>
 
     {#if form?.error}
@@ -51,10 +43,7 @@
     <!-- New Tag Form -->
     {#if showNewTagForm}
         <div class="mb-6 bg-white p-4 rounded-lg shadow-sm" transition:slide>
-            <TagForm 
-                onCancel={() => showNewTagForm = false} 
-                categories={data.categories}
-            />
+            <TagForm onCancel={() => showNewTagForm = false} />
         </div>
     {/if}
 
@@ -64,7 +53,6 @@
             <div transition:slide>
                 <TagCard
                     {tag}
-                    categories={data.categories}
                     isEditing={editingTagId === tag.id}
                     on:edit={() => editingTagId = tag.id}
                     on:cancelEdit={() => editingTagId = null}

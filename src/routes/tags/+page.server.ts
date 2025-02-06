@@ -1,7 +1,7 @@
 // src/routes/tags/+page.server.ts
 import { db } from '$lib/server/db';
 import { tags, memo_tags } from '$lib/server/db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { eq, sql, and } from 'drizzle-orm';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -47,8 +47,7 @@ export const actions = {
             const existingTag = await db
                 .select()
                 .from(tags)
-                .where(eq(tags.userId, 1))
-                .where(eq(tags.name, name))
+                .where(and(eq(tags.userId, 1), eq(tags.name, name)))
                 .limit(1);
 
             if (existingTag.length > 0) {
@@ -86,8 +85,7 @@ export const actions = {
                 
                 // Then delete the tag
                 await tx.delete(tags)
-                    .where(eq(tags.id, tagId))
-                    .where(eq(tags.userId, 1)); // Ensure user owns the tag
+                    .where(and(eq(tags.id, tagId),eq(tags.userId, 1)));
             });
 
             return { success: true };
