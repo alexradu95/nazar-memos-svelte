@@ -1,24 +1,23 @@
 <script lang="ts">
-    import ColorPicker from '../atoms/ColorPicker.svelte';
+    import EmojiPicker from '../atoms/EmojiPicker.svelte';
     
     let { 
         name = "", 
-        color = "#3b82f6",
+        icon = "📁",
+        description = "",
         action = "?/create",
-        submitLabel = "Create Tag",
+        submitLabel = "Create Category",
         onCancel 
     } = $props<{
         name?: string;
-        color?: string;
+        icon?: string;
+        description?: string;
         action?: string;
         submitLabel?: string;
         onCancel: () => void;
     }>();
-    
-    const DEFAULT_COLORS = [
-        '#3b82f6', '#ef4444', '#10b981', '#f59e0b',
-        '#8b5cf6', '#ec4899', '#6366f1', '#14b8a6',
-    ];
+
+    let selectedIcon = $state(icon);
 </script>
 
 <form
@@ -27,8 +26,18 @@
     class="space-y-4"
 >
     <div>
+        <label for="icon" class="block text-sm font-medium text-gray-700">
+            Icon
+        </label>
+        <div class="mt-1">
+            <EmojiPicker bind:value={selectedIcon} />
+            <input type="hidden" name="icon" value={selectedIcon}>
+        </div>
+    </div>
+
+    <div>
         <label for="name" class="block text-sm font-medium text-gray-700">
-            Tag Name
+            Category Name
         </label>
         <input
             type="text"
@@ -41,21 +50,22 @@
     </div>
     
     <div>
-        <label class="block text-sm font-medium text-gray-700">
-            Color
+        <label for="description" class="block text-sm font-medium text-gray-700">
+            Description (Optional)
         </label>
-        <div class="mt-2">
-            <ColorPicker
-                colors={DEFAULT_COLORS}
-                selectedColor={color}
-            />
-        </div>
+        <textarea
+            id="description"
+            name="description"
+            rows="3"
+            value={description}
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500"
+        ></textarea>
     </div>
 
     <div class="flex justify-end gap-2">
         <button
             type="button"
-            on:click={onCancel}
+            onclick={onCancel}
             class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md"
         >
             Cancel

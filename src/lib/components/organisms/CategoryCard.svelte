@@ -1,11 +1,14 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    import TagColorDot from '../atoms/TagColorDot.svelte';
-    import TagForm from '../molecules/TagForm.svelte';
-    import type { Tag } from '$lib/server/db/schema';
+    import type { TagCategory } from '$lib/server/db/schema';
+    import CategoryForm from '../molecules/CategoryForm.svelte';
 
-    let { tag, isEditing } = $props<{
-        tag: Tag;
+    interface CategoryWithCount extends TagCategory {
+        tagCount: number;
+    }
+
+    let { category, isEditing } = $props<{
+        category: CategoryWithCount;
         isEditing?: boolean;
     }>();
 
@@ -17,28 +20,35 @@
 
     function handleDelete(e: Event) {
         e.preventDefault();
-        dispatch('delete', { id: tag.id });
+        dispatch('delete', { id: category.id });
     }
 </script>
 
 {#if isEditing}
     <div class="bg-white p-4 rounded-lg shadow-sm">
-        <TagForm
-            name={tag.name}
-            color={tag.color ?? '#3b82f6'}
+        <CategoryForm
+            name={category.name}
+            icon={category.icon}
+            description={category.description ?? ''}
             action="?/update"
             submitLabel="Save"
             onCancel={() => dispatch('cancelEdit')}
         />
+        <input type="hidden" name="categoryId" value={category.id}>
     </div>
 {:else}
     <div class="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <TagColorDot color={tag.color} />
-            <span class="font-medium">{tag.name}</span>
-            <span class="text-sm text-gray-500">
-                {tag.count} {tag.count === 1 ? 'memo' : 'memos'}
-            </span>
+            <span class="text-2xl">{category.icon}</span>
+            <div>
+                <h3 class="font-medium">{category.name}</h3>
+                {#if category.description}
+                    <p class="text-sm text-gray-500">{category.description}</p>
+                {/if}
+                <p class="text-sm text-gray-500">
+                    {category.tagCount} {category.tagCount === 1 ? 'tag' : 'tags'}
+                </p>
+            </div>
         </div>
         <div class="flex items-center gap-2">
             <button
@@ -55,7 +65,7 @@
                 class="inline"
                 onsubmit={handleDelete}
             >
-                <input type="hidden" name="tagId" value={tag.id}>
+                <input type="hidden" name="categoryId" value={category.id}>
                 <button
                     type="submit"
                     class="p-2 text-gray-500 hover:text-red-600 rounded-full hover:bg-gray-100"
