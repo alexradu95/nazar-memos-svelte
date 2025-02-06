@@ -1,15 +1,20 @@
 <script lang="ts">
     import ColorPicker from '../atoms/ColorPicker.svelte';
+    import type { TagCategory } from '$lib/server/db/schema';
     
     let { 
         name = "", 
         color = "#3b82f6",
-        action = "?/create",
+        categoryId = null,
+        categories = [],
+        action = "?/createTag",  // Default to createTag action
         submitLabel = "Create Tag",
         onCancel 
     } = $props<{
         name?: string;
         color?: string;
+        categoryId?: number | null;
+        categories?: TagCategory[];
         action?: string;
         submitLabel?: string;
         onCancel: () => void;
@@ -52,10 +57,27 @@
         </div>
     </div>
 
+    <div>
+        <label for="categoryId" class="block text-sm font-medium text-gray-700">
+            Category
+        </label>
+        <select
+            id="categoryId"
+            name="categoryId"
+            value={categoryId ?? ''}
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500"
+        >
+            <option value="">No Category</option>
+            {#each categories as category}
+                <option value={category.id}>{category.icon} {category.name}</option>
+            {/each}
+        </select>
+    </div>
+
     <div class="flex justify-end gap-2">
         <button
             type="button"
-            on:click={onCancel}
+            onclick={onCancel}
             class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md"
         >
             Cancel

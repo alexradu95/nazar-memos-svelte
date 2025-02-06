@@ -5,7 +5,7 @@
         name = "", 
         icon = "📁",
         description = "",
-        action = "?/create",
+        action = "?/createCategory",  // Default to createCategory action
         submitLabel = "Create Category",
         onCancel 
     } = $props<{
@@ -16,7 +16,7 @@
         submitLabel?: string;
         onCancel: () => void;
     }>();
-
+    
     let selectedIcon = $state(icon);
 </script>
 
