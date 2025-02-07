@@ -1,4 +1,3 @@
-// src/lib/server/db/schema.ts
 import { sql, type InferSelectModel } from 'drizzle-orm';
 import { sqliteTable, text, integer, primaryKey } from 'drizzle-orm/sqlite-core';
 
@@ -69,10 +68,3 @@ export const memo_tags = sqliteTable('memo_tags', {
         pk: primaryKey({ columns: [table.memoId, table.tagId] })
     }
 });
-
-export type User = InferSelectModel<typeof users>;
-export type Session = InferSelectModel<typeof sessions>;
-export type Memo = InferSelectModel<typeof memos>;
-export type Tag = InferSelectModel<typeof tags>;
-export type MemoTag = InferSelectModel<typeof memo_tags>;
-export type TagCategory = InferSelectModel<typeof tagCategories>;
