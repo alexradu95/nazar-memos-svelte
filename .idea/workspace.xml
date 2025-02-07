@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab882071-a766-4585-96a2-8a721e062ae4" name="Changes" comment="Prepare for tags categories">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/tags/+page.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/tags/+page.server.ts" afterDir="false" />
-    </list>
+    <list default="true" id="ab882071-a766-4585-96a2-8a721e062ae4" name="Changes" comment="Prepare for tags categories" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +19,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="MIXED" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -67,6 +64,7 @@
       <workItem from="1738789271851" duration="2514000" />
       <workItem from="1738839087324" duration="54000" />
       <workItem from="1738862212974" duration="180000" />
+      <workItem from="1738936718645" duration="82000" />
     </task>
     <task id="LOCAL-00001" summary="Prepare for tags categories">
       <option name="closed" value="true" />
